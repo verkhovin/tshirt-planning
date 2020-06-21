@@ -59,6 +59,20 @@ public class RoomSessionController {
     broadcastRoom(roomId);
   }
 
+  public void closeSession(String sessionId) {
+    RoomParticipation remove = sessionRoomParticipations.remove(sessionId);
+    if(remove != null) {
+      Long roomId = remove.getRoomId();
+      List<WebSocketSession> sessions = rooms.get(roomId);
+      for (int i = 0; i < sessions.size(); i++) {
+        if (sessions.get(i).getId().equals(sessionId)) {
+          sessions.remove(i);
+          break;
+        }
+      }
+    }
+  }
+
   private void broadcastRoom(Long roomId) {
     RoomDto roomDto = roomService.getRoom(roomId);
     List<WebSocketSession> roomSessions = rooms.get(roomId);
@@ -68,7 +82,6 @@ public class RoomSessionController {
       } catch (Exception e) {
         LOG.error("Failed to send updated room", e);
       }
-
     });
   }
 }
