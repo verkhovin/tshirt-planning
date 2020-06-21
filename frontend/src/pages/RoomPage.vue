@@ -21,17 +21,30 @@
                     </b-button-toolbar>
                 </b-col>
             </b-row>
+
             <b-row class="row-cols-1 row-cols-md-3">
                 <b-col class="mb-4" v-for="(estimate, i) in room.estimates" :key="i">
                     <div class="card h-100">
                         <div class="card-body">
-
-                            <h1 class="card-title display-1">{{ estimate.size }}</h1>
+                            <h1 class="card-title display-1"
+                                v-bind:class="{diff: room.dominatingEstimate && estimate.size !== room.dominatingEstimate}"
+                            >{{ estimate.size }}</h1>
                         </div>
                         <div class="card-footer">
                             <small class="text-muted">{{ estimate.username }}</small>
                         </div>
                     </div>
+                </b-col>
+            </b-row>
+            <b-row v-if="room.estimatesOpened">
+                <b-col class="col-md-6 offset-md-5">
+                    <p v-if="room.dominatingEstimate">
+                        Estimated as {{room.dominatingEstimate}}
+                        <b-icon-check-all style="color: #28a745;" v-if="room.hasConsensus"></b-icon-check-all>
+                        <b-icon-exclamation-triangle style="color: #ffc107" v-else
+                                                     v-b-popover.hover.top="'There are nonmatching estimates'"></b-icon-exclamation-triangle>
+                    </p>
+                    <p v-else>There is no dominating estimate.</p>
                 </b-col>
             </b-row>
         </div>
@@ -117,5 +130,7 @@
 </script>
 
 <style scoped>
-
+    .diff {
+        color: #dc3545;
+    }
 </style>

@@ -33,6 +33,7 @@ build/
 ## frontend ##
 .DS_Store
 node_modules/
+node/
 /dist
 
 # local env files

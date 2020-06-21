@@ -5,32 +5,24 @@
                 <b-card>
                     <b-container>
                         <b-row>
-                            <b-col>
-                                <b-button v-on:click="createRoom" variant="outline-success">Create a new room</b-button>
-                            </b-col>
-                        </b-row>
-                        <b-row class="mt-3">
-                            <b-col>
-                                <p class="text-muted text-center justify-content-center align-self-center">or</p>
-                            </b-col>
-                        </b-row>
-                        <b-row>
-                            <b-col>
+                            <div class="d-flex col-md">
+                                <b-button v-on:click="createRoom" variant="outline-success" class="m-auto">Create a new room</b-button>
+                            </div>
+                            <div class="col-md-2 d-flex text-muted text-center justify-content-center align-self-center m-2">
+                                <p class="m-auto">or</p>
+                            </div>
+                            <div class="col-md d-flex text-muted text-center justify-content-center align-self-center">
                                 <b-form v-on:submit.prevent="enterRoom(enterRoomId)">
-                                    <div class="form-row">
-                                        <b-col class="mb-2">
-                                            <b-form-input
-                                                v-model="enterRoomId"
-                                                required
-                                                placeholder="Room id"
-                                            ></b-form-input>
-                                        </b-col>
-                                        <b-col class="col-md-2">
-                                            <b-button type="submit" variant="outline-success">Enter the room</b-button>
-                                        </b-col>
-                                    </div>
+                                    <b-form-group>
+                                        <b-form-input
+                                            v-model="enterRoomId"
+                                            required
+                                            placeholder="Room id"
+                                        ></b-form-input>
+                                    </b-form-group>
+                                    <b-button type="submit" variant="outline-success">Enter the room</b-button>
                                 </b-form>
-                            </b-col>
+                            </div>
                         </b-row>
                     </b-container>
                 </b-card>
@@ -52,7 +44,10 @@
     methods: {
       createRoom() {
         rooms.createRoom(
-          response => { console.log(Number(response.headers["location"].split("/")[3])); this.enterRoom(Number(response.headers["location"].split("/")[3]))},
+          response => {
+            console.log(Number(response.headers["location"].split("/")[3]));
+            this.enterRoom(Number(response.headers["location"].split("/")[3]))
+          },
           error => console.log(error)
         )
       },

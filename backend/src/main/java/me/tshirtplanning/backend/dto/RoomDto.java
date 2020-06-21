@@ -4,7 +4,7 @@ import java.util.List;
 
 public class RoomDto {
   private Long roomId;
-  private String finalEstimate;
+  private String dominatingEstimate;
   private Boolean hasConsensus;
   private Boolean estimatesOpened;
   private List<EstimateDto> estimates;
@@ -17,12 +17,12 @@ public class RoomDto {
     this.roomId = roomId;
   }
 
-  public String getFinalEstimate() {
-    return finalEstimate;
+  public String getDominatingEstimate() {
+    return dominatingEstimate;
   }
 
-  public void setFinalEstimate(String finalEstimate) {
-    this.finalEstimate = finalEstimate;
+  public void setDominatingEstimate(String dominatingEstimate) {
+    this.dominatingEstimate = dominatingEstimate;
   }
 
   public Boolean getHasConsensus() {

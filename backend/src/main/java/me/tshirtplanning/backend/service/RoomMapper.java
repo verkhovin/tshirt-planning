@@ -1,7 +1,7 @@
 package me.tshirtplanning.backend.service;
 
-import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import me.tshirtplanning.backend.dto.RoomDto;
@@ -15,7 +15,7 @@ public class RoomMapper {
     RoomDto roomDto = new RoomDto();
     roomDto.setRoomId(room.getRoomId());
     roomDto.setEstimatesOpened(room.isShowEstimates());
-    HashMap<String, Long> sizeMaps = new HashMap<>();
+    Map<String, Long> sizeMaps = new HashMap<>();
     roomDto.setEstimates(
         room.getEstimates().stream()
             .map(estimate -> toEstimateDto(estimate, room.isShowEstimates()))
@@ -23,12 +23,7 @@ public class RoomMapper {
             .collect(Collectors.toList())
     );
     roomDto.setHasConsensus(sizeMaps.size() < 2);
-    roomDto.setFinalEstimate(
-        sizeMaps.entrySet().stream()
-            .max(Comparator.comparingLong(Map.Entry::getValue))
-            .map(Map.Entry::getKey)
-            .orElse(null)
-    );
+    roomDto.setDominatingEstimate(getDominatingEstimate(sizeMaps));
     return roomDto;
   }
 
@@ -37,5 +32,18 @@ public class RoomMapper {
     estimateDto.setUsername(estimate.getUsername());
     estimateDto.setSize(showEstimates ? estimate.getSize() : "?");
     return estimateDto;
+  }
+
+  private String getDominatingEstimate(Map<String, Long> estimatesMap) {
+    List<Map.Entry<String, Long>> estimates = estimatesMap.entrySet().stream()
+        .sorted((v1, v2) -> Long.compare(v2.getValue(), v1.getValue()))
+        .collect(Collectors.toList());
+    if (estimates.isEmpty()) {
+      return null;
+    }
+    if (estimates.size() == 1 || !estimates.get(0).getValue().equals(estimates.get(1).getValue())) {
+      return estimates.get(0).getKey();
+    }
+    return null;
   }
 }
