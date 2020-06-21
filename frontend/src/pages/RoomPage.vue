@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="text-center">
         <div v-if="username">
             <b-row class="mb-3">
                 <b-col class="col-md-6 offset-md-4">
@@ -36,8 +36,8 @@
                     </div>
                 </b-col>
             </b-row>
-            <b-row v-if="room.estimatesOpened">
-                <b-col class="col-md-6 offset-md-5">
+            <div v-if="room.estimatesOpened">
+                <div>
                     <p v-if="room.dominatingEstimate">
                         Estimated as {{room.dominatingEstimate}}
                         <b-icon-check-all style="color: #28a745;" v-if="room.hasConsensus"></b-icon-check-all>
@@ -45,10 +45,10 @@
                                                      v-b-popover.hover.top="'There are nonmatching estimates'"></b-icon-exclamation-triangle>
                     </p>
                     <p v-else>There is no dominating estimate.</p>
-                </b-col>
-            </b-row>
+                </div>
+            </div>
         </div>
-        <div v-else>
+        <div v-else class="text-left">
             <b-row>
                 <b-col>
                     <b-form v-on:submit.prevent="connect">
@@ -64,6 +64,7 @@
                 </b-col>
             </b-row>
         </div>
+        <p>Room id is <b>{{room.roomId}}</b></p>
     </div>
 
 </template>

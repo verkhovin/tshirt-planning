@@ -3,6 +3,7 @@ package me.tshirtplanning.backend.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import me.tshirtplanning.backend.dto.RoomDto;
 import me.tshirtplanning.backend.model.Estimate;
@@ -22,8 +23,10 @@ public class RoomMapper {
             .peek(estimateDto -> sizeMaps.merge(estimateDto.getSize(), 1L, Long::sum))
             .collect(Collectors.toList())
     );
-    roomDto.setHasConsensus(sizeMaps.size() < 2);
-    roomDto.setDominatingEstimate(getDominatingEstimate(sizeMaps));
+    if(room.isShowEstimates()) {
+      roomDto.setHasConsensus(sizeMaps.size() < 2);
+      roomDto.setDominatingEstimate(getDominatingEstimate(sizeMaps));
+    }
     return roomDto;
   }
 
@@ -36,6 +39,7 @@ public class RoomMapper {
 
   private String getDominatingEstimate(Map<String, Long> estimatesMap) {
     List<Map.Entry<String, Long>> estimates = estimatesMap.entrySet().stream()
+        .filter(entry -> entry.getKey() != null)
         .sorted((v1, v2) -> Long.compare(v2.getValue(), v1.getValue()))
         .collect(Collectors.toList());
     if (estimates.isEmpty()) {

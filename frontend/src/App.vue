@@ -1,6 +1,6 @@
 <template>
-  <div id="app" class="h-100">
-    <div class="container h-100">
+  <div id="app">
+    <div class="container">
       <router-view></router-view>
     </div>
   </div>
