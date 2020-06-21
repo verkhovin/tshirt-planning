@@ -3,12 +3,12 @@ package me.tshirtplanning.backend.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import me.tshirtplanning.backend.dto.RoomDto;
 import me.tshirtplanning.backend.model.Estimate;
 import me.tshirtplanning.backend.model.Room;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service
 public class RoomMapper {
@@ -33,7 +33,11 @@ public class RoomMapper {
   public RoomDto.EstimateDto toEstimateDto(Estimate estimate, boolean showEstimates) {
     RoomDto.EstimateDto estimateDto = new RoomDto.EstimateDto();
     estimateDto.setUsername(estimate.getUsername());
-    estimateDto.setSize(showEstimates ? estimate.getSize() : "?");
+    String displayedEstimate = estimate.getSize();
+    if(!showEstimates) {
+      displayedEstimate = StringUtils.isEmpty(displayedEstimate) ? "-" : "?";
+    }
+    estimateDto.setSize(displayedEstimate);
     return estimateDto;
   }
 
