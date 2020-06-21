@@ -1,0 +1,121 @@
+<template>
+    <div>
+        <div v-if="username">
+            <b-row class="mb-3">
+                <b-col class="col-md-6 offset-md-4">
+                    <b-button-toolbar key-nav aria-label="Toolbar with button groups">
+                        <b-button-group class="mx-1 btn-group-md">
+                            <b-button v-on:click="submitEstimate('XS')" variant="outline-success">XS</b-button>
+                            <b-button v-on:click="submitEstimate('S')" variant="outline-success">S</b-button>
+                            <b-button v-on:click="submitEstimate('M')" variant="outline-success">M</b-button>
+                            <b-button v-on:click="submitEstimate('L')" variant="outline-success">L</b-button>
+                            <b-button v-on:click="submitEstimate('XL')" variant="outline-success">XL</b-button>
+                        </b-button-group>
+                        <b-button-group class="mx-1 btn-group-md">
+                            <b-button v-on:click="hideEstimates" variant="outline-success" v-if="room.estimatesOpened">Hide</b-button>
+                            <b-button v-on:click="showEstimates" variant="outline-success" v-else>Show</b-button>
+                        </b-button-group>
+                        <b-button-group class="mx-1 btn-group-md">
+                            <b-button v-on:click="clearEstimates" variant="danger">Clear</b-button>
+                        </b-button-group>
+                    </b-button-toolbar>
+                </b-col>
+            </b-row>
+            <b-row class="row-cols-1 row-cols-md-3">
+                <b-col class="mb-4" v-for="(estimate, i) in room.estimates" :key="i">
+                    <div class="card h-100">
+                        <div class="card-body">
+
+                            <h1 class="card-title display-1">{{ estimate.size }}</h1>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">{{ estimate.username }}</small>
+                        </div>
+                    </div>
+                </b-col>
+            </b-row>
+        </div>
+        <div v-else>
+            <b-row>
+                <b-col>
+                    <b-form v-on:submit.prevent="connect">
+                        <b-form-group label="Name">
+                            <b-form-input
+                                v-model="usernameInput"
+                                required
+                            ></b-form-input>
+                        </b-form-group>
+
+                        <b-button type="submit" variant="outline-success">Enter</b-button>
+                    </b-form>
+                </b-col>
+            </b-row>
+        </div>
+    </div>
+
+</template>
+
+<script>
+  import { mapState } from "vuex";
+
+  export default {
+    name: "RoomPage",
+    data() {
+      return {
+        usernameInput: null
+      }
+    },
+    computed: {
+      ...mapState('room', ['room', 'username', 'error']),
+    },
+    methods: {
+      submitEstimate(size) {
+        this.sendMessage({
+          type: "ESTIMATE",
+          payload: size
+        })
+      },
+      showEstimates() {
+        this.sendMessage({
+          type: "SHOW"
+        })
+      },
+      hideEstimates() {
+        this.sendMessage({
+          type: "HIDE"
+        })
+      },
+      clearEstimates() {
+        this.sendMessage({
+          type: "CLEAR"
+        })
+      },
+      connect() {
+        let connectMessage = {
+          roomId: this.$route.params.id,
+          username: this.usernameInput
+        };
+        this.$socket.send(JSON.stringify(connectMessage))
+        this.$store.dispatch("room/submitUsername", {username: this.usernameInput})
+      },
+      sendMessage(message) {
+        this.$socket.send(JSON.stringify(message))
+      }
+    },
+    created() {
+      this.$store.dispatch('room/getRoom', {id: this.$route.params.id})
+      this.$options.sockets.onmessage = (data) => {
+        if (data.data !== 'OK') {
+          this.$store.dispatch('room/setRoomFrom', {room: JSON.parse(data.data)})
+        }
+      }
+    },
+    destroyed() {
+      delete this.$options.sockets.onmessage
+    },
+  }
+</script>
+
+<style scoped>
+
+</style>
