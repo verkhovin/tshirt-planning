@@ -55,5 +55,5 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-public/
-public/**
+backend/**/public/
+backend/**/public/**
