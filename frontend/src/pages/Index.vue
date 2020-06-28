@@ -45,7 +45,6 @@
       createRoom() {
         rooms.createRoom(
           response => {
-            console.log(Number(response.headers["location"].split("/")[3]));
             this.enterRoom(Number(response.headers["location"].split("/")[3]))
           },
           error => console.log(error)

@@ -1,6 +1,6 @@
 <template>
     <div class="text-center">
-        <div v-if="username">
+        <div v-if="connected">
             <b-row class="mb-3">
                 <b-col class="col-md-6 offset-md-4">
                     <b-button-toolbar key-nav aria-label="Toolbar with button groups">
@@ -76,7 +76,8 @@
     name: "RoomPage",
     data() {
       return {
-        usernameInput: null
+        usernameInput: null,
+        connected: false
       }
     },
     computed: {
@@ -110,7 +111,9 @@
           username: this.usernameInput
         };
         this.$socket.send(JSON.stringify(connectMessage))
+        this.$cookie.set("tshirt-planning-username", this.usernameInput)
         this.$store.dispatch("room/submitUsername", {username: this.usernameInput})
+        this.connected = true
       },
       sendMessage(message) {
         this.$socket.send(JSON.stringify(message))
@@ -118,14 +121,26 @@
     },
     created() {
       this.$store.dispatch('room/getRoom', {id: this.$route.params.id})
+      this.$options.sockets.onopen = () => {
+        let storedName = this.$cookie.get("tshirt-planning-username")
+        if (storedName) {
+          this.usernameInput = storedName
+        }
+        this.connect()
+      }
+      this.$options.sockets.onclose = () => {
+        this.connected = false
+      }
       this.$options.sockets.onmessage = (data) => {
         if (data.data !== 'OK') {
           this.$store.dispatch('room/setRoomFrom', {room: JSON.parse(data.data)})
         }
       }
+      this.$connect()
     },
     destroyed() {
       delete this.$options.sockets.onmessage
+      this.$disconnect()
     },
   }
 </script>
