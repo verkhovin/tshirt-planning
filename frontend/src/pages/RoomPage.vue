@@ -1,6 +1,9 @@
 <template>
     <div class="text-center">
-        <div v-if="connected">
+        <div v-if="connecting">
+            Loading..
+        </div>
+        <div v-else-if="username">
             <b-row class="mb-3">
                 <b-col class="col-md-6 offset-md-4">
                     <b-button-toolbar key-nav aria-label="Toolbar with button groups">
@@ -51,7 +54,7 @@
         <div v-else class="text-left">
             <b-row>
                 <b-col>
-                    <b-form v-on:submit.prevent="connect">
+                    <b-form v-on:submit.prevent="enterUsername">
                         <b-form-group label="Name">
                             <b-form-input
                                 v-model="usernameInput"
@@ -77,11 +80,16 @@
     data() {
       return {
         usernameInput: null,
-        connected: false
+        connecting: false,
       }
     },
     computed: {
       ...mapState('room', ['room', 'username', 'error']),
+    },
+    watch: {
+      username() {
+        this.$connect()
+      }
     },
     methods: {
       submitEstimate(size) {
@@ -105,38 +113,39 @@
           type: "CLEAR"
         })
       },
-      connect() {
-        let connectMessage = {
-          roomId: this.$route.params.id,
-          username: this.usernameInput
-        };
-        this.$socket.send(JSON.stringify(connectMessage))
+      enterUsername() {
         this.$cookie.set("tshirt-planning-username", this.usernameInput)
         this.$store.dispatch("room/submitUsername", {username: this.usernameInput})
-        this.connected = true
+        this.connecting = true
       },
       sendMessage(message) {
         this.$socket.send(JSON.stringify(message))
+      },
+      configureSocket() {
+        this.$options.sockets.onopen = function() {
+        }
+        this.$options.sockets.onmessage = function(data) {
+          this.connecting = false;
+          if(data.data === 'init') {
+            let connectMessage = {
+              roomId: this.$route.params.id,
+              username: this.username
+            };
+            this.$socket.send(JSON.stringify(connectMessage))
+          } else if (data.data !== 'OK') {
+            this.$store.dispatch('room/setRoomFrom', {room: JSON.parse(data.data)})
+          }
+        }
       }
     },
     created() {
+      this.configureSocket()
       this.$store.dispatch('room/getRoom', {id: this.$route.params.id})
-      this.$options.sockets.onopen = () => {
-        let storedName = this.$cookie.get("tshirt-planning-username")
-        if (storedName) {
-          this.usernameInput = storedName
-        }
-        this.connect()
+      let storedUserName = this.$cookie.get("tshirt-planning-username")
+      if (storedUserName) {
+        this.$store.dispatch('room/submitUsername', {username: storedUserName})
+        this.connecting = true
       }
-      this.$options.sockets.onclose = () => {
-        this.connected = false
-      }
-      this.$options.sockets.onmessage = (data) => {
-        if (data.data !== 'OK') {
-          this.$store.dispatch('room/setRoomFrom', {room: JSON.parse(data.data)})
-        }
-      }
-      this.$connect()
     },
     destroyed() {
       delete this.$options.sockets.onmessage
