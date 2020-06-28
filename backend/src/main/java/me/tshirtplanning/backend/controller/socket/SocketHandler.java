@@ -7,7 +7,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import me.tshirtplanning.backend.controller.RoomSessionController;
 import me.tshirtplanning.backend.dto.RoomParticipation;
 import me.tshirtplanning.backend.dto.RoomMessage;
-import me.tshirtplanning.backend.model.Room;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -38,8 +37,9 @@ public class SocketHandler extends TextWebSocketHandler {
   }
 
   @Override
-  public void afterConnectionEstablished(WebSocketSession session) {
+  public void afterConnectionEstablished(WebSocketSession session) throws IOException {
     unhandledSessions.put(session.getId(), session);
+    session.sendMessage(new TextMessage("init"));
   }
 
   @Override
