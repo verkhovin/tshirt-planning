@@ -10,6 +10,7 @@ import me.tshirtplanning.backend.model.RoomSeq;
 import static me.tshirtplanning.backend.model.RoomSeq.SEQ_RECORD_ID;
 import me.tshirtplanning.backend.repository.RoomRepository;
 import me.tshirtplanning.backend.repository.RoomSeqRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,7 @@ public class RoomService {
   }
 
   public Long createRoom() {
+//    System.out.println(name);
     Room newRoom = roomRepository.save(new Room(getNextRoomId()));
     return newRoom.getRoomId();
   }
@@ -35,7 +37,6 @@ public class RoomService {
     return roomMapper.toRoomDto(room);
   }
 
-  @Transactional
   public void addUser(RoomParticipation participation) {
     onExistingRoom(participation.getRoomId(), room -> {
       List<Estimate> estimates = room.getEstimates();
@@ -47,7 +48,6 @@ public class RoomService {
     });
   }
 
-  @Transactional
   public void commitEstimate(Long roomId, String userName, String newEstimate) {
     onExistingRoom(roomId, room ->
         room.getEstimates().stream()
@@ -57,17 +57,14 @@ public class RoomService {
     );
   }
 
-  @Transactional
   public void showEstimates(Long roomId) {
     onExistingRoom(roomId, room -> room.setShowEstimates(true));
   }
 
-  @Transactional
   public void hideEstimates(Long roomId) {
     onExistingRoom(roomId, room -> room.setShowEstimates(false));
   }
 
-  @Transactional
   public void clearEstimates(Long roomId) {
     onExistingRoom(roomId, room -> {
       room.getEstimates().forEach(Estimate::clear);
@@ -86,7 +83,6 @@ public class RoomService {
         .orElseThrow(() -> new IllegalArgumentException("Entity not found"));
   }
 
-  @Transactional
   public Long getNextRoomId() {
     RoomSeq seq = roomSeqRepository.findById(SEQ_RECORD_ID)
         .orElseGet(() -> roomSeqRepository.save(RoomSeq.init()));

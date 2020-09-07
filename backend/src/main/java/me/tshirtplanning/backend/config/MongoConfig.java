@@ -1,10 +1,8 @@
 package me.tshirtplanning.backend.config;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
-import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 
@@ -15,6 +13,7 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
   protected String getDatabaseName() {
     return "tshirt-planning";
   }
+
 
   @Bean
   public MongoTransactionManager mongoTransactionManager(MongoDatabaseFactory mongoDatabaseFactory) {
