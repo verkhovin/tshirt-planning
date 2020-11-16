@@ -6,32 +6,27 @@ import me.tshirtplanning.backend.dto.RoomDto;
 import me.tshirtplanning.backend.dto.RoomParticipation;
 import me.tshirtplanning.backend.model.Estimate;
 import me.tshirtplanning.backend.model.Room;
-import me.tshirtplanning.backend.model.RoomSeq;
-import static me.tshirtplanning.backend.model.RoomSeq.SEQ_RECORD_ID;
 import me.tshirtplanning.backend.repository.RoomRepository;
-import me.tshirtplanning.backend.repository.RoomSeqRepository;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class RoomService {
   private final RoomRepository roomRepository;
-  private final RoomSeqRepository roomSeqRepository;
   private final RoomMapper roomMapper;
 
-  public RoomService(RoomRepository roomRepository, RoomSeqRepository roomSeqRepository, RoomMapper roomMapper) {
+  public RoomService(RoomRepository roomRepository, RoomMapper roomMapper) {
     this.roomRepository = roomRepository;
-    this.roomSeqRepository = roomSeqRepository;
     this.roomMapper = roomMapper;
   }
 
   public Long createRoom() {
-//    System.out.println(name);
-    Room newRoom = roomRepository.save(new Room(getNextRoomId()));
-    return newRoom.getRoomId();
+    Room newRoom = roomRepository.save(new Room());
+    return newRoom.getId();
   }
 
+  @Transactional(readOnly = true)
   public RoomDto getRoom(Long id) {
     Room room = getExistingRoom(id);
     return roomMapper.toRoomDto(room);
@@ -79,16 +74,7 @@ public class RoomService {
   }
 
   private Room getExistingRoom(Long id) {
-    return roomRepository.findByRoomId(id)
+    return roomRepository.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("Entity not found"));
-  }
-
-  public Long getNextRoomId() {
-    RoomSeq seq = roomSeqRepository.findById(SEQ_RECORD_ID)
-        .orElseGet(() -> roomSeqRepository.save(RoomSeq.init()));
-    Long value = seq.getValue();
-    seq.setValue(value + 1);
-    roomSeqRepository.save(seq);
-    return value;
   }
 }

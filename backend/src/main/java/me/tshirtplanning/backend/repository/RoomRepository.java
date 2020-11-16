@@ -1,9 +1,7 @@
 package me.tshirtplanning.backend.repository;
 
-import java.util.Optional;
 import me.tshirtplanning.backend.model.Room;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface RoomRepository extends MongoRepository<Room, String> {
-  Optional<Room> findByRoomId(Long roomId);
+public interface RoomRepository extends CrudRepository<Room, Long> {
 }

@@ -1,10 +1,14 @@
 package me.tshirtplanning.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Estimate {
   private String username;
   private String size;
 
-  public Estimate(String username, String size) {
+  @JsonCreator
+  public Estimate(@JsonProperty("username") String username, @JsonProperty("simze") String size) {
     this.username = username;
     this.size = size;
   }

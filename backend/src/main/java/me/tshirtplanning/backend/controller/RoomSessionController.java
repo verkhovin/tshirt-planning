@@ -8,7 +8,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import me.tshirtplanning.backend.dto.RoomDto;
 import me.tshirtplanning.backend.dto.RoomParticipation;
 import me.tshirtplanning.backend.dto.RoomMessage;
-import me.tshirtplanning.backend.model.Room;
 import me.tshirtplanning.backend.service.RoomService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

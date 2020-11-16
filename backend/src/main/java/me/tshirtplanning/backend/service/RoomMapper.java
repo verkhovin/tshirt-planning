@@ -14,7 +14,7 @@ import org.springframework.util.StringUtils;
 public class RoomMapper {
   public RoomDto toRoomDto(Room room) {
     RoomDto roomDto = new RoomDto();
-    roomDto.setRoomId(room.getRoomId());
+    roomDto.setRoomId(room.getId());
     roomDto.setEstimatesOpened(room.isShowEstimates());
     Map<String, Long> sizeMaps = new HashMap<>();
     roomDto.setEstimates(

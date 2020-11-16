@@ -2,7 +2,6 @@ package me.tshirtplanning.backend.controller;
 
 import java.net.URI;
 import me.tshirtplanning.backend.dto.RoomDto;
-import me.tshirtplanning.backend.model.Room;
 import me.tshirtplanning.backend.service.RoomService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
