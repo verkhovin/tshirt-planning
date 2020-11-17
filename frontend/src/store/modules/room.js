@@ -1,4 +1,4 @@
-import rooms from "../../api/rooms";
+import rooms from "@/api/rooms";
 
 const state = () => ({
   room: null,

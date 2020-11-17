@@ -4,6 +4,7 @@ import java.net.URI;
 import me.tshirtplanning.backend.dto.RoomDto;
 import me.tshirtplanning.backend.service.RoomService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/rooms")
+@CrossOrigin(origins = "https://verkhovin.github.io", allowedHeaders = "location", exposedHeaders = "location")
 public class RoomResource {
   private final RoomService roomService;
 

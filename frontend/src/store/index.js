@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import room from "./modules/room";
+import room from "@/store/modules/room";
 
 Vue.use(Vuex)
 Vue.config.devtools = true

@@ -1,6 +1,8 @@
 import axios from 'axios'
 
-export const AXIOS = axios.create()
+const options = {};
+options.baseURL = 'https://tshirt-poker.herokuapp.com'
+export const AXIOS = axios.create(options)
 
 export function get(url, callback, errorCallback) {
   AXIOS.get(url)

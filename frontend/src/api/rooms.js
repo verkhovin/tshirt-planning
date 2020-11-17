@@ -1,4 +1,4 @@
-import { post, get} from "./http-commons";
+import { post, get} from "@/api/http-commons";
 
 export default {
   createRoom(callback, errorCallback) {

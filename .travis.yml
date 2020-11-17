@@ -1,0 +1,15 @@
+language: java
+jdk:
+  - openjdk11
+before_deploy:
+  - cd backend
+deploy:
+  provider: heroku
+  api_key: $API_KEY
+  app: tshirt-poker
+  on:
+    branch: main
+after_deploy:
+  - cd ..
+  - chmod 777 .travis/frontend_deploy.sh
+  - .travis/frontend_deploy.sh

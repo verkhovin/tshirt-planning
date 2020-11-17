@@ -1,7 +1,7 @@
 import Vue from 'vue'
-import App from './App.vue'
-import router from "./router"
-import store from "./store"
+import App from '@/App.vue'
+import router from "@/router"
+import store from "@/store"
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -13,7 +13,7 @@ Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 
-Vue.use(VueNativeSock, 'ws://' + location.host + '/ws/planning', { connectManually: true })
+Vue.use(VueNativeSock, 'wss://tshirt-poker.herokuapp.com/ws/planning', { connectManually: true })
 new Vue({
   router,
   store,

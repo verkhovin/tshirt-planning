@@ -32,7 +32,7 @@
 </template>
 
 <script>
-  import rooms from "../api/rooms";
+  import rooms from "@/api/rooms";
 
   export default {
     name: "Index",

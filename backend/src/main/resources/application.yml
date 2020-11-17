@@ -1,17 +1,14 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/poker
-    username: poker
-    password: poker
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
 
     hikari:
       connection-timeout: 10000
-      maximum-pool-size: 20
+      maximum-pool-size: 15
   jpa:
 #    show_sql: true
 #    generate-ddl: true
     hibernate:
       ddl-auto: update
-    properties:
-      hibernate:
-        default_schema: poker
