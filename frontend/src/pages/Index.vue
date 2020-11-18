@@ -1,10 +1,10 @@
 <template>
     <div>
-        <b-row>
-            <b-col>
+        <b-row class="text-center justify-content-center align-self-center">
+            <b-col class="col-md-6">
                 <b-card>
                     <b-container>
-                        <b-row>
+                        <b-col>
                             <div class="d-flex col-md">
                                 <b-button v-if="loading" variant="success" class="m-auto" disabled>
                                   <b-spinner small type="grow"></b-spinner>
@@ -14,10 +14,10 @@
                                   Create a new room
                                 </b-button>
                             </div>
-                            <div class="col-md-2 d-flex text-muted text-center justify-content-center align-self-center m-2">
-                                <p class="m-auto">or</p>
+                            <div>
+                              <hr class="m-4">
                             </div>
-                            <div class="col-md d-flex text-muted text-center justify-content-center align-self-center">
+                            <div class="text-muted text-center justify-content-center align-self-center">
                                 <b-form v-on:submit.prevent="enterRoom(enterRoomId)">
                                     <b-form-group>
                                         <b-form-input
@@ -29,7 +29,7 @@
                                     <b-button type="submit" variant="outline-success">Enter the room</b-button>
                                 </b-form>
                             </div>
-                        </b-row>
+                        </b-col>
                     </b-container>
                 </b-card>
             </b-col>
