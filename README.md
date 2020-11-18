@@ -1,4 +1,4 @@
-# T-Shirt Planning (Scrum) Poker
+# T-Shirt Planning (Scrum) Poker [![Build Status](https://travis-ci.com/verkhovin/tshirt-planning.svg?branch=main)](https://travis-ci.com/verkhovin/tshirt-planning)
 
 This app allows you to estimate issues with your teammates remotely without any initial setup, loading user
 stories or signing in.
