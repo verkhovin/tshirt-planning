@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/rooms")
-@CrossOrigin(origins = "https://verkhovin.github.io", allowedHeaders = "location", exposedHeaders = "location")
+@CrossOrigin(origins = {"https://verkhovin.github.io", "http://localhost:3000"}, allowedHeaders = "location", exposedHeaders = "location")
 public class RoomResource {
   private final RoomService roomService;
 

@@ -1,4 +1,4 @@
 module.exports = {
   outputDir: 'target/dist',
-  publicPath: '/poker/'
+  publicPath: process.env.NODE_ENV === 'production' ? '/poker/' : '/'
 }

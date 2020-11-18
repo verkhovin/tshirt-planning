@@ -1,4 +1,29 @@
 spring:
+  profiles:
+    active: production
+  jpa:
+#    show_sql: true
+#    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+
+---
+
+spring:
+  profiles: development
+  datasource:
+    url: jdbc:postgresql://localhost:5432/poker
+    username: poker
+    password: poker
+
+    hikari:
+      connection-timeout: 10000
+      maximum-pool-size: 2
+
+---
+
+spring:
+  profiles: production
   datasource:
     url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
@@ -7,8 +32,4 @@ spring:
     hikari:
       connection-timeout: 10000
       maximum-pool-size: 15
-  jpa:
-#    show_sql: true
-#    generate-ddl: true
-    hibernate:
-      ddl-auto: update
+

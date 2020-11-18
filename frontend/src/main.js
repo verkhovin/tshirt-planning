@@ -13,7 +13,11 @@ Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 
-Vue.use(VueNativeSock, 'wss://tshirt-poker.herokuapp.com/ws/planning', { reconnection: true, connectManually: true })
+Vue.use(VueNativeSock,
+  process.env.NODE_ENV === 'production'
+    ? 'wss://tshirt-poker.herokuapp.com/ws/planning'
+    : 'ws://localhost:8080/ws/planning',
+  {reconnection: true, connectManually: true})
 new Vue({
   router,
   store,
