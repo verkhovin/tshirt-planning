@@ -17,7 +17,7 @@ You can read more about scrum poker and T-Shirt sizes [here](https://www.c-sharp
 3. If you are for the first time here, enter your name. It will be used to identify you.
 4. After entering the room, send the room's id (or direct link) to your teammates.
 5. Discuss an issue with your teammates. When all the participants give their estimates, click **Show**.
-6. Click *Clear* for the next round.
+6. Click **Clear** for the next round.
 
 ## Tech info
 It's a simple web application with Java + Spring Boot backend and frontend implemented with Vue.js. Frontend
@@ -25,7 +25,7 @@ communicates with the backend through minimalistic REST API and sockets.
 
 Frontend and backend are split into separate submodules that are built by Maven.
 
-Simple CI is configured by Travis:
+Simple CI is configured with [Travis CI](https://travis-ci.com/github/verkhovin/tshirt-planning):
 * starts `mvn install` to build all the artifacts
 * deploys backend to heroku
 * commits frontend artifacts to [Github Pages Repository](https://github.com/verkhovin/poker) 
