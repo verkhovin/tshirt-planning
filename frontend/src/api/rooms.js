@@ -1,8 +1,8 @@
 import { post, get} from "@/api/http-commons";
 
 export default {
-  createRoom(callback, errorCallback) {
-    post("/api/rooms", null, callback, errorCallback)
+  createRoom(callback, errorCallback, finallyCallback) {
+    post("/api/rooms", null, callback, errorCallback, finallyCallback)
   },
 
   getRoom(roomId, callback, errorCallback) {

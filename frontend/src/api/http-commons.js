@@ -10,8 +10,9 @@ export function get(url, callback, errorCallback) {
     .catch(error => errorCallback(error))
 }
 
-export function post(url, body, callback, errorCallback) {
+export function post(url, body, callback, errorCallback, finallyCallback) {
   AXIOS.post(url, body)
     .then(response => callback(response))
     .catch(error => errorCallback(error))
+    .finally(() => finallyCallback())
 }

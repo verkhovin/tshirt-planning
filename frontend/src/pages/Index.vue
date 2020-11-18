@@ -6,7 +6,13 @@
                     <b-container>
                         <b-row>
                             <div class="d-flex col-md">
-                                <b-button v-on:click="createRoom" variant="outline-success" class="m-auto">Create a new room</b-button>
+                                <b-button v-if="loading" variant="success" class="m-auto" disabled>
+                                  <b-spinner small type="grow"></b-spinner>
+                                  Loading...
+                                </b-button>
+                                <b-button v-else v-on:click="createRoom" variant="outline-success" class="m-auto">
+                                  Create a new room
+                                </b-button>
                             </div>
                             <div class="col-md-2 d-flex text-muted text-center justify-content-center align-self-center m-2">
                                 <p class="m-auto">or</p>
@@ -39,15 +45,18 @@
     data() {
       return {
         enterRoomId: null,
+        loading: false,
       }
     },
     methods: {
       createRoom() {
+        this.loading = true
         rooms.createRoom(
           response => {
             this.enterRoom(Number(response.headers["location"].split("/")[3]))
           },
-          error => console.log(error)
+          error => console.log(error),
+            () => this.loading = false
         )
       },
       enterRoom(roomId) {

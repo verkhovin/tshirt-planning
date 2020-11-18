@@ -1,7 +1,9 @@
 <template>
     <div class="text-center">
         <div v-if="connecting">
-            Loading..
+          <div class="text-center">
+            <b-spinner variant="primary" label="Text Centered"></b-spinner>
+          </div>
         </div>
         <div v-else-if="username">
             <b-row class="mb-3">
@@ -125,6 +127,7 @@
         this.$options.sockets.onopen = function() {
         }
         this.$options.sockets.onmessage = function(data) {
+          console.log("on message")
           this.connecting = false;
           if(data.data === 'init') {
             let connectMessage = {
@@ -144,10 +147,12 @@
       let storedUserName = this.$cookie.get("tshirt-planning-username")
       if (storedUserName) {
         this.$store.dispatch('room/submitUsername', {username: storedUserName})
+        this.$connect()
         this.connecting = true
       }
     },
     destroyed() {
+      console.log("destroy")
       delete this.$options.sockets.onmessage
       this.$disconnect()
     },
