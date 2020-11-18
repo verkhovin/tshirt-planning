@@ -13,9 +13,8 @@ You can read more about scrum poker and T-Shirt sizes [here](https://www.c-sharp
 
 ## How to use
 1. Go to https://verkhovin.github.io/poker/.
-2. Click to **Create a new room** or if you have the room's id, enter the  existing room by entering it to 
-corresponding field and clicking **Enter the room**.
-3. If you are for the first time here, enter your name. It will be used to identify you
+2. Click to **Create a new room** or if you have the room's id, enter the existing room by entering it to the **Room id** field, and click **Enter the room**.
+3. If you are for the first time here, enter your name. It will be used to identify you.
 4. After entering the room, send the room's id (or direct link) to your teammates.
 5. Discuss an issue with your teammates. When all the participants give their estimates, click **Show**.
 6. Click *Clear* for the next round.
