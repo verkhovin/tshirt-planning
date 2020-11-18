@@ -4,6 +4,7 @@ This app allows you to estimate issues with your teammates remotely without any 
 stories or signing in.
 
 ![Main Screen](.repo/mainscreen.png?raw=true)
+[Try it in demo room](https://verkhovin.github.io/poker/rooms/1)
 
 So far, only T-Shirt sizing estimates are available as I use only them at work. I'm looking forward to finding time to implement other types of 
 estimates there (story points primarily).
