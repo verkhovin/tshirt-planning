@@ -4,11 +4,17 @@ jdk:
 before_deploy:
   - cd backend
 deploy:
-  provider: heroku
-  api_key: $API_KEY
-  app: tshirt-poker
+  skip_cleanup: true
+  provider: elasticbeanstalk
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key: $AWS_ACCESS_KEY
+  region: "us-east-1"
+  app: $AWS_APP_NAME
+  env: $AWS_ENV_NAME
+  bucket_name: $AWS_S3_BUCKET
+  zip_file: 'target/backend-0.0.1-SNAPSHOT.jar'
   on:
-    branch: main
+    branch: $ALLOWED_BRANCH
 after_deploy:
   - cd ..
   - chmod 777 .travis/frontend_deploy.sh
