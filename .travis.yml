@@ -1,3 +1,6 @@
+branches:
+  only:
+    - main
 language: java
 jdk:
   - openjdk11
@@ -14,7 +17,7 @@ deploy:
   bucket_name: $AWS_S3_BUCKET
   zip_file: 'target/backend-0.0.1-SNAPSHOT.jar'
   on:
-    branch: $ALLOWED_BRANCH
+    branch: main
 after_deploy:
   - cd ..
   - chmod 777 .travis/frontend_deploy.sh

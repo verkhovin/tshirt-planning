@@ -27,7 +27,7 @@ Frontend and backend are split into separate submodules that are built by Maven.
 
 Simple CI is configured with [Travis CI](https://travis-ci.com/github/verkhovin/tshirt-planning):
 * starts `mvn install` to build all the artifacts
-* deploys backend to heroku
+* deploys backend artifacts to AWS Elastic Beanstalk
 * commits frontend artifacts to [Github Pages Repository](https://github.com/verkhovin/poker) 
 
 Technologies: Java, Spring Boot, Spring Data JPA, PostgreSQL, Vue.js, Bootstrap, Websockets, REST API
