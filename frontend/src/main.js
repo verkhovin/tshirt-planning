@@ -15,7 +15,7 @@ Vue.use(BootstrapVueIcons)
 
 Vue.use(VueNativeSock,
   process.env.NODE_ENV === 'production'
-    ? 'wss://verkhovin.ru/ws/planning'
+    ? 'wss://tshirt-poker.herokuapp.com/ws/planning'
     : 'ws://localhost:8080/ws/planning',
   {reconnection: true, connectManually: true})
 new Vue({
