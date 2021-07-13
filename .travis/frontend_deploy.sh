@@ -15,4 +15,3 @@ cp index.html 404.html
 git add .
 git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
 git push
-
