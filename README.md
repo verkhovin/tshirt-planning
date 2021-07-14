@@ -1,4 +1,4 @@
-# T-Shirt Planning (Scrum) Poker [![Build Status](https://travis-ci.com/verkhovin/tshirt-planning.svg?branch=main)](https://travis-ci.com/verkhovin/tshirt-planning)
+# T-Shirt Planning (Scrum) Poker
 
 This app allows you to estimate issues with your teammates remotely without any initial setup, loading user
 stories or signing in.
@@ -24,11 +24,6 @@ It's a simple web application with Java + Spring Boot backend and frontend imple
 communicates with the backend through minimalistic REST API and sockets.
 
 Frontend and backend are split into separate submodules that are built by Maven.
-
-Simple CI is configured with [Travis CI](https://travis-ci.com/github/verkhovin/tshirt-planning):
-* starts `mvn install` to build all the artifacts
-* deploys backend to heroku
-* commits frontend artifacts to [Github Pages Repository](https://github.com/verkhovin/poker) 
 
 Technologies: Java, Spring Boot, Spring Data JPA, PostgreSQL, Vue.js, Bootstrap, Websockets, REST API
 
