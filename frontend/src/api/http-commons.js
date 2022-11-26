@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const options = {};
-options.baseURL = process.env.NODE_ENV === 'production' ? 'https://tshirt-poker.herokuapp.com' : 'http://localhost:8080'
+options.baseURL = process.env.NODE_ENV === 'production' ? 'https://estimates.ithurts.dev' : 'http://localhost:8080'
 export const AXIOS = axios.create(options)
 
 export function get(url, callback, errorCallback) {
