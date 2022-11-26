@@ -19,13 +19,12 @@ jobs:
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
-
             cd /home/ec2-user/tshirt-planning &&
             git checkout master &&
             git fetch --all &&
             git reset --hard origin/master &&
             git pull origin master &&
-            docker build -t planning-poker:latest backend &&
             docker stop app && docker rm app &&
+            docker build -t planning-poker:latest backend &&
             docker run -d --name app --env-file /home/ec2-user/env.list --network appNetwork -p 8080:8080 planning-poker:latest
           '
