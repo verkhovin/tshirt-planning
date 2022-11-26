@@ -24,15 +24,15 @@ jobs:
         with:
           node-version: 18.12.1
       - run: |
-        cd ./code/frontend
-        npm ci
-        npm run build
-        cd ../../
-        rm -rf ./poker/css/*
-        rm -rf ./poker/js/*
-        rm -f ./poker/*.html
-        rm -f ./poker/*.ico
-        cp ./code/frontend/target/dist/* ./poker/
-        cd ./poker
-        git commit -m "update"
-        git push
+          cd ./code/frontend
+          npm ci
+          npm run build
+          cd ../../
+          rm -rf ./poker/css/*
+          rm -rf ./poker/js/*
+          rm -f ./poker/*.html
+          rm -f ./poker/*.ico
+          cp ./code/frontend/target/dist/* ./poker/
+          cd ./poker
+          git commit -m "update"
+          git push
