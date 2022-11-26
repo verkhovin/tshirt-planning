@@ -3,23 +3,20 @@ package me.tshirtplanning.backend.dto;
 import java.util.Objects;
 
 public class RoomParticipation {
-  private Long roomId;
-  private String username;
+  private final Long roomId;
+  private final String username;
+
+  public RoomParticipation(Long roomId, String username) {
+    this.roomId = roomId;
+    this.username = username;
+  }
 
   public Long getRoomId() {
     return roomId;
   }
 
-  public void setRoomId(Long roomId) {
-    this.roomId = roomId;
-  }
-
   public String getUsername() {
     return username;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
   }
 
   @Override

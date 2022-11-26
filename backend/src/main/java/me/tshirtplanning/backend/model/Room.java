@@ -25,33 +25,42 @@ public class Room {
   @Convert(converter = EstimateConverter.class)
   private List<Estimate> estimates;
 
-
-  public Room() {
+ public Room() {
     this.showEstimates = false;
     this.estimates = new ArrayList<>();
+  }
+
+  private Room(Long id, boolean showEstimates, List<Estimate> estimates) {
+    this.id = id;
+    this.showEstimates = showEstimates;
+    this.estimates = estimates;
   }
 
   public Long getId() {
     return id;
   }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
   public boolean isShowEstimates() {
     return showEstimates;
   }
 
-  public void setShowEstimates(boolean showEstimates) {
-    this.showEstimates = showEstimates;
+  public Room withShowEstimates(boolean showEstimates) {
+    return new Room(
+        this.id,
+        showEstimates,
+        this.estimates
+    );
   }
 
   public List<Estimate> getEstimates() {
     return estimates;
   }
 
-  public void setEstimates(List<Estimate> estimates) {
-    this.estimates = estimates;
+  public Room withEstimates(List<Estimate> estimates) {
+    return new Room(
+        this.id,
+        this.showEstimates,
+        estimates
+    );
   }
 }

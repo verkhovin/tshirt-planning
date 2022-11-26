@@ -17,7 +17,7 @@ import org.springframework.web.socket.WebSocketSession;
 
 @Component
 public class RoomSessionController {
-  private static Logger LOG = LoggerFactory.getLogger(RoomSessionController.class.getName());
+  private static final Logger LOG = LoggerFactory.getLogger(RoomSessionController.class.getName());
 
   private final Map<String, RoomParticipation> sessionRoomParticipations = new ConcurrentHashMap<>(); //redis here
   private final Map<Long, List<WebSocketSession>> rooms = new ConcurrentHashMap<>();

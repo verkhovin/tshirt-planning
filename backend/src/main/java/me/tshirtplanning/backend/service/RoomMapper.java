@@ -1,6 +1,5 @@
 package me.tshirtplanning.backend.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -10,48 +9,47 @@ import me.tshirtplanning.backend.model.Room;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import static java.util.Collections.reverseOrder;
+
 @Service
 public class RoomMapper {
   public RoomDto toRoomDto(Room room) {
-    RoomDto roomDto = new RoomDto();
-    roomDto.setRoomId(room.getId());
-    roomDto.setEstimatesOpened(room.isShowEstimates());
-    Map<String, Long> sizeMaps = new HashMap<>();
-    roomDto.setEstimates(
-        room.getEstimates().stream()
+    final List<RoomDto.EstimateDto> estimates = room.getEstimates().stream()
             .map(estimate -> toEstimateDto(estimate, room.isShowEstimates()))
-            .peek(estimateDto -> sizeMaps.merge(estimateDto.getSize(), 1L, Long::sum))
-            .collect(Collectors.toList())
+            .collect(Collectors.toList());
+    final Map<String, Long> countPerEstimate = estimates.stream()
+            .collect(Collectors.toMap(RoomDto.EstimateDto::getSize, (e) -> 1L, Long::sum));
+    return new RoomDto(
+            room.getId(),
+            room.isShowEstimates() ? getDominatingEstimate(countPerEstimate): null,
+        room.isShowEstimates()&& countPerEstimate.size() < 2,
+            room.isShowEstimates(),
+            estimates
     );
-    if(room.isShowEstimates()) {
-      roomDto.setHasConsensus(sizeMaps.size() < 2);
-      roomDto.setDominatingEstimate(getDominatingEstimate(sizeMaps));
-    }
-    return roomDto;
   }
 
   public RoomDto.EstimateDto toEstimateDto(Estimate estimate, boolean showEstimates) {
-    RoomDto.EstimateDto estimateDto = new RoomDto.EstimateDto();
-    estimateDto.setUsername(estimate.getUsername());
-    String displayedEstimate = estimate.getSize();
-    if(!showEstimates) {
-      displayedEstimate = StringUtils.isEmpty(displayedEstimate) ? "-" : "?";
-    }
-    estimateDto.setSize(displayedEstimate);
-    return estimateDto;
+    String displayedEstimate = showEstimates
+        ? estimate.getSize()
+        : StringUtils.hasText(estimate.getSize()) ? "?" : "-";
+    return new RoomDto.EstimateDto(estimate.getUsername(),  displayedEstimate);
   }
 
-  private String getDominatingEstimate(Map<String, Long> estimatesMap) {
-    List<Map.Entry<String, Long>> estimates = estimatesMap.entrySet().stream()
+  private String getDominatingEstimate(Map<String, Long> countPerEstimateMap) {
+    List<Map.Entry<String, Long>> estimates = countPerEstimateMap.entrySet().stream()
         .filter(entry -> entry.getKey() != null)
-        .sorted((v1, v2) -> Long.compare(v2.getValue(), v1.getValue()))
+        .sorted(reverseOrder(Map.Entry.comparingByValue()))
         .collect(Collectors.toList());
     if (estimates.isEmpty()) {
       return null;
     }
-    if (estimates.size() == 1 || !estimates.get(0).getValue().equals(estimates.get(1).getValue())) {
+    if (hasSingleDominatingEstimate(estimates)) {
       return estimates.get(0).getKey();
     }
     return null;
+  }
+
+  private boolean hasSingleDominatingEstimate(List<Map.Entry<String, Long>> estimates) {
+    return estimates.size() == 1 || !estimates.get(0).getValue().equals(estimates.get(1).getValue());
   }
 }
