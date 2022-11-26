@@ -23,10 +23,10 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18.12.1
+          node-version: 16.14.2
       - run: |
           cd ./code/frontend
-          npm install
+          npm ci
           npm run build
           cd ../../
           rm -rf ./poker/css/*
