@@ -1,13 +1,12 @@
 # T-Shirt Planning (Scrum) Poker
 
 This app allows you to estimate issues with your teammates remotely without any initial setup, loading user
-stories or signing in.
+stories, or signing in.
 
 ![Main Screen](.repo/mainscreen.png?raw=true)
 [Try it in demo room](https://verkhovin.github.io/poker/rooms/1)
 
-So far, only T-Shirt sizing estimates are available as I use only them at work. I'm looking forward to finding time to implement other types of 
-estimates there (story points primarily).
+Only T-Shirt sizing estimates are available so far.
 
 You can read more about scrum poker and T-Shirt sizes [here](https://www.c-sharpcorner.com/article/agile-story-point-estimation-techniques-t-shirt-sizing/#:~:text=What%20is%20T%2Dshirt%20sizing,%2C%20M%2C%20L%2C%20XL).
 
@@ -22,8 +21,6 @@ You can read more about scrum poker and T-Shirt sizes [here](https://www.c-sharp
 ## Tech info
 It's a simple web application with Java + Spring Boot backend and frontend implemented with Vue.js. Frontend
 communicates with the backend through minimalistic REST API and sockets.
-
-Frontend and backend are split into separate submodules that are built by Maven.
 
 Technologies: Java, Spring Boot, Spring Data JPA, PostgreSQL, Vue.js, Bootstrap, Websockets, REST API
 
