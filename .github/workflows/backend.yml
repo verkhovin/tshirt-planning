@@ -22,8 +22,8 @@ jobs:
             cd /home/ec2-user/tshirt-planning &&
             git checkout main &&
             git fetch --all &&
-            git reset --hard origin/master &&
-            git pull origin master &&
+            git reset --hard origin/main &&
+            git pull origin main &&
             docker build -t planning-poker:latest backend &&
             docker stop app && docker rm app &&
             docker run -d --name app --env-file /home/ec2-user/env.list --network appNetwork -p 8080:8080 planning-poker:latest
