@@ -34,8 +34,10 @@ jobs:
           rm -f ./poker/*.html
           rm -f ./poker/*.ico
           cp -r ./code/frontend/target/dist/* ./poker/
+          cp ./poker/index.html ./poker/404.html
           cd ./poker
           git config --global user.name "Github Actions"
           git config --global user.email "verkhovin@users.noreply.github.com"
+          git add .
           git commit -m "update"
           git push
