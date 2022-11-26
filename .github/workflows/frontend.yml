@@ -33,7 +33,7 @@ jobs:
           rm -rf ./poker/js/*
           rm -f ./poker/*.html
           rm -f ./poker/*.ico
-          cp ./code/frontend/target/dist/* ./poker/
+          cp -r ./code/frontend/target/dist/* ./poker/
           cd ./poker
           git commit -m "update"
           git push
