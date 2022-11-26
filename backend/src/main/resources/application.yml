@@ -11,10 +11,6 @@ spring:
 spring:
   profiles: development
   datasource:
-    url: jdbc:postgresql://localhost:5432/poker
-    username: poker
-    password: poker
-
     hikari:
       connection-timeout: 10000
       maximum-pool-size: 2
