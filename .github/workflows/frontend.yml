@@ -26,7 +26,7 @@ jobs:
           node-version: 18.12.1
       - run: |
           cd ./code/frontend
-          npm ci
+          npm install
           npm run build
           cd ../../
           rm -rf ./poker/css/*
