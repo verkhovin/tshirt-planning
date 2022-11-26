@@ -28,4 +28,4 @@ jobs:
             docker build -t planning-poker:latest backend &&
             docker stop app && docker rm app &&
             docker run -d --name app --env-file /home/ec2-user/env.list --network appNetwork -p 8080:8080 planning-poker:latest
-            
+          '
